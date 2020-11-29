@@ -3,14 +3,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MessageBoard.API.Entities;
 using MessageBoard.API.Services;
 using MessageBoard.API.Services.Interfaces;
-using MessageBoard.API.UnitTests.MockServices;
+using MessageBoard.API.Tests.MockServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MessageBoard.API.UnitTests.Tests
+namespace MessageBoard.API.Tests.Tests
 {
     [TestClass]
     public class CacheServiceTests

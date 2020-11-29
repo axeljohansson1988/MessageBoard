@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MessageBoard.API.UnitTests.MockServices
+namespace MessageBoard.API.Tests.MockServices
 {
     class MemoryCacheMock : IMemoryCache
     {

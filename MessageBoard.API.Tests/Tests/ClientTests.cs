@@ -5,10 +5,10 @@ using MessageBoard.API.Providers.Interfaces;
 using MessageBoard.API.Responses;
 using MessageBoard.API.Services;
 using MessageBoard.API.Services.Interfaces;
-using MessageBoard.API.UnitTests.MockServices;
+using MessageBoard.API.Tests.MockServices;
 using System;
 
-namespace MessageBoard.API.UnitTests.Tests
+namespace MessageBoard.API.Tests.Tests
 {
     [TestClass]
     public class ClientTests

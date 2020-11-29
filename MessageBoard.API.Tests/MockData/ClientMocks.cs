@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MessageBoard.API.UnitTests.MockData
+namespace MessageBoard.API.Tests.MockData
 {
     public static class ClientMocks
     {
