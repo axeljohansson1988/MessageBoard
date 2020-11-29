@@ -104,5 +104,13 @@ namespace MessageBoard.API.Tests.Tests
             var jsonResponse = JsonConvert.SerializeObject(response);
             Assert.AreEqual(jsonExpected, jsonResponse);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void SetBoardMessageWithInvalidClientIdThrowsArgumentNullException()
+        {
+            boardMessageService.SetBoardMessage(MockData.BoardMessageMocks.BoardMessageWitInvalidClientId);
+            Assert.Fail();
+        }
     }
 }

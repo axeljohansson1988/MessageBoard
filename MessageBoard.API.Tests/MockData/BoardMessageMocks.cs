@@ -22,6 +22,11 @@ namespace MessageBoard.API.Tests.MockData
             Message = "Im a message from a non-existant client.",
             ClientId = 1337
         };
+        public static readonly BoardMessage BoardMessageWitInvalidClientId = new BoardMessage()
+        {
+            Message = "Im a message that cannot exist.",
+            ClientId = -42
+        };
         public static readonly List<BoardMessage> EmptyBoardMessagesList = new List<BoardMessage>();
         public static readonly List<BoardMessage> ThreeFirstBoardMessagesList = new List<BoardMessage>()
         {
