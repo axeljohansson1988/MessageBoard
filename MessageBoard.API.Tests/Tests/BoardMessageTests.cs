@@ -107,7 +107,7 @@ namespace MessageBoard.API.Tests.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void SetBoardMessageWithInvalidClientIdThrowsArgumentNullException()
+        public void SetBoardMessageWithInvalidClientIdThrowsArgumentException()
         {
             boardMessageService.SetBoardMessage(MockData.BoardMessageMocks.BoardMessageWitInvalidClientId);
             Assert.Fail();
