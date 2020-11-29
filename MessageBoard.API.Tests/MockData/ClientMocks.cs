@@ -12,6 +12,7 @@ namespace MessageBoard.API.Tests.MockData
         public static readonly Client ClientWithEmptyName = new Client() { Name = string.Empty };
         public static readonly Client ClientWithWhiteSpaceName = new Client() { Name = "    " };
         public static readonly Client ClientWithoutName = new Client() { Name = null };
+        public static readonly Client NewValidClient = new Client() { Name = "Valid Client" };
         public static readonly List<Client> EmptyClientsList = new List<Client>();
         public static readonly List<Client> ThreeFirstClientsList = new List<Client>()
         {
@@ -35,7 +36,7 @@ namespace MessageBoard.API.Tests.MockData
         {
             new Client ()
             {
-                Id = 4, 
+                Id = 4,
                 Name = "Lady Gaga"
             },
             new Client ()
@@ -50,7 +51,7 @@ namespace MessageBoard.API.Tests.MockData
             }
         }).ToList();
 
-      
+
 
     }
 }

@@ -11,7 +11,7 @@ namespace MessageBoard.API.Tests.MockServices
     {
         public ICacheEntry CreateEntry(object key)
         {
-            throw new NotImplementedException();
+            return new CacheEntryMock() { Key = key };
         }
 
         public void Dispose()

@@ -7,6 +7,7 @@ using MessageBoard.API.Services;
 using MessageBoard.API.Services.Interfaces;
 using MessageBoard.API.Tests.MockServices;
 using System;
+using Newtonsoft.Json;
 
 namespace MessageBoard.API.Tests.Tests
 {
@@ -63,6 +64,32 @@ namespace MessageBoard.API.Tests.Tests
         {
             clientService.SetClient(null);
             Assert.Fail();
+        }
+
+        [TestMethod]
+        public void SetValidClientReturnsValidClientResponse()
+        {
+            var validClient = MockData.ClientMocks.NewValidClient;
+            var expected = new ClientResponse()
+            {
+                Client = validClient,
+                OperationSuccess = true,
+                StorageOperation = new Entities.StorageOperation()
+                {
+                    Id = Enums.StorageOperationEnum.Create,
+                    Name = Constants.Constants.StorageOperations.Create
+                }
+            };
+            var response = clientService.SetClient(validClient);
+            
+            // setting not tested properties
+            expected.Status = response.Status;
+            expected.Client.Created = response.Client.Created;
+            
+            // convert to json strings for comparison
+            var jsonExpected = JsonConvert.SerializeObject(expected);
+            var jsonResponse = JsonConvert.SerializeObject(response);
+            Assert.AreEqual(jsonExpected, jsonResponse);
         }
     }
 }
