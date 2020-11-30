@@ -112,5 +112,32 @@ namespace MessageBoard.API.Tests.Tests
             boardMessageService.SetBoardMessage(MockData.BoardMessageMocks.BoardMessageWitInvalidClientId);
             Assert.Fail();
         }
+
+        [TestMethod]
+        public void UpdateValidBoardMessageReturnsValidBoardMessageResponse()
+        {
+            var existingMessage = MockData.BoardMessageMocks.ExistingValidBoardMessage;
+            existingMessage.Message = "This message is modified and should be updated.";
+            var expected = new BoardMessageResponse()
+            {
+                BoardMessage = existingMessage,
+                OperationSuccess = true,
+                StorageOperation = new Entities.StorageOperation()
+                {
+                    Id = Enums.StorageOperationEnum.Update,
+                    Name = Constants.Constants.StorageOperations.Update
+                }
+            };
+            var response = boardMessageService.UpdateBoardMessage(existingMessage);
+
+            // setting not tested properties
+            expected.Status = response.Status;
+            expected.BoardMessage.Modified = response.BoardMessage.Modified;
+
+            // convert to json strings for comparison
+            var jsonExpected = JsonConvert.SerializeObject(expected);
+            var jsonResponse = JsonConvert.SerializeObject(response);
+            Assert.AreEqual(jsonExpected, jsonResponse);
+        }
     }
 }

@@ -28,6 +28,13 @@ namespace MessageBoard.API.Tests.MockData
             ClientId = -42
         };
         public static readonly List<BoardMessage> EmptyBoardMessagesList = new List<BoardMessage>();
+        public static readonly BoardMessage ExistingValidBoardMessage = new BoardMessage()
+        {
+            Id = 4,
+            Message = "This message is very much existing.",
+            ClientId = ClientMocks.ExistingValidClient.Id,
+            Created = new DateTime(2020, 11, 27)
+        };
         public static readonly List<BoardMessage> ThreeFirstBoardMessagesList = new List<BoardMessage>()
         {
             new BoardMessage()
@@ -43,12 +50,10 @@ namespace MessageBoard.API.Tests.MockData
                 Id = 3
             }
         };
-        public static readonly List<BoardMessage> AllBoardMessagesList = ThreeFirstBoardMessagesList.Concat(new List<BoardMessage>()
+        public static readonly List<BoardMessage> AllBoardMessagesList = ThreeFirstBoardMessagesList
+            .Concat(new List<BoardMessage>() { ExistingValidBoardMessage })
+            .Concat(new List<BoardMessage>()
         {
-            new BoardMessage ()
-            {
-                Id = 4
-            },
             new BoardMessage ()
             {
                 Id = 5
@@ -56,6 +61,10 @@ namespace MessageBoard.API.Tests.MockData
             new BoardMessage ()
             {
                 Id = 6
+            },
+            new BoardMessage ()
+            {
+                Id = 7
             }
         }).ToList();
     }
