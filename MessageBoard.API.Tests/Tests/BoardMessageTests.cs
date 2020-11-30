@@ -218,5 +218,77 @@ namespace MessageBoard.API.Tests.Tests
         }
 
         #endregion
+
+        #region DeleteBoardMessage
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DeleteBoardMessageWithInvalidIdThrowsArgumentException()
+        {
+            var invalidId = -1337;
+            boardMessageService.DeleteBoardMessage(invalidId, MockData.ClientMocks.ExistingValidClient.Id);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DeleteBoardMessageWithInvalidClientIdThrowsArgumentException()
+        {
+            var invalidClientId = -1337;
+            boardMessageService.DeleteBoardMessage(MockData.BoardMessageMocks.ExistingValidBoardMessage.Id, invalidClientId);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(HttpResponseException))]
+        public void DeleteBoardMessageWithNonExistantIdThrowsHttpResponseException()
+        {
+            var nonExistantId = 1337;
+            boardMessageService.DeleteBoardMessage(nonExistantId, MockData.ClientMocks.ExistingValidClient.Id);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(HttpResponseException))]
+        public void DeleteBoardMessageWithNonExistantClientIdThrowsHttpResponseException()
+        {
+            var nonExistantClientId = 1337;
+            boardMessageService.DeleteBoardMessage(MockData.BoardMessageMocks.ExistingValidBoardMessage.Id, nonExistantClientId);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(HttpResponseException))]
+        public void DeleteBoardMessageWithOtherClientsIdThrowsHttpResponseException()
+        {
+            boardMessageService.DeleteBoardMessage(
+                MockData.BoardMessageMocks.ExistingValidBoardMessage.Id,
+                MockData.BoardMessageMocks.ExistingValidBoardMessage.ClientId + 1);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void DeleteBoardMessageReturnsValidBoardMessageResponse()
+        {
+            var expected = new BoardMessageResponse()
+            {
+                BoardMessage = null,
+                StorageOperation = new StorageOperation()
+                {
+                    Id = Enums.StorageOperationEnum.Delete,
+                    Name = Constants.Constants.StorageOperations.Delete
+                }
+            };
+
+            var response = boardMessageService.DeleteBoardMessage(MockData.BoardMessageMocks.ExistingValidBoardMessage.Id, MockData.BoardMessageMocks.ExistingValidBoardMessage.ClientId);
+
+            // setting not tested properties
+            expected.Status = response.Status;
+
+            // convert to json strings for comparison
+            var jsonExpected = JsonConvert.SerializeObject(expected);
+            var jsonResponse = JsonConvert.SerializeObject(response);
+            Assert.AreEqual(jsonExpected, jsonResponse);
+        }
+        #endregion
     }
 }

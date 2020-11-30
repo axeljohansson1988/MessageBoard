@@ -49,12 +49,12 @@ namespace MessageBoard.API.Services
             var messageToDelete = messageList.FirstOrDefault(message => message.Id == boardMessageId);
             if (messageToDelete == null)
             {
-                throw new Exception($"Cannot delete board message with id: {boardMessageId} => message does not exist.");
+                throw new HttpResponseException(response, $"Cannot delete board message with id: {boardMessageId} => message does not exist.");
             }
 
             if (messageToDelete.ClientId != clientId)
             {
-                throw new Exception($"Cannot delete board message with id: {boardMessageId} => message is not created by client with id: {clientId}.");
+                throw new HttpResponseException(response, $"Cannot delete board message with id: {boardMessageId} => message is not created by client with id: {clientId}.");
             }
 
             messageList = messageList.Where(message => message.Id != boardMessageId).ToList();
