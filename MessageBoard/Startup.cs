@@ -26,7 +26,7 @@ namespace MessageBoard.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors(options => options.AddPolicy("AllowOrigin", builder => builder.WithOrigins().AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
             services.AddControllers(options =>
                 options.Filters.Add(new HttpResponseExceptionFilter())
             );
@@ -49,6 +49,7 @@ namespace MessageBoard.API
 
             app.UseRouting();
 
+            app.UseCors("AllowOrigin");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
