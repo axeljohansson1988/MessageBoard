@@ -1,4 +1,5 @@
-﻿using MessageBoard.API.ErrorHandling;
+﻿using MessageBoard.API.Entities;
+using MessageBoard.API.ErrorHandling;
 using MessageBoard.API.Providers;
 using MessageBoard.API.Providers.Interfaces;
 using MessageBoard.API.Responses;
@@ -23,6 +24,8 @@ namespace MessageBoard.API.Tests.Tests
         private static readonly IClientService clientService = new ClientService(cacheService, idProvider);
         private static readonly IBoardMessageService boardMessageService = new BoardMessageService(cacheService, clientService, idProvider);
 
+        #region IdTests
+
         [TestMethod]
         public void FirstMessageIdIs1()
         {
@@ -38,6 +41,10 @@ namespace MessageBoard.API.Tests.Tests
             var nextId = idProvider.GetNextId(MockData.BoardMessageMocks.ThreeFirstBoardMessagesList);
             Assert.AreEqual(expected, nextId);
         }
+
+        #endregion
+
+        #region SetBoardMessage
 
         [TestMethod]
         [ExpectedException(typeof(HttpResponseException))]
@@ -105,22 +112,92 @@ namespace MessageBoard.API.Tests.Tests
             Assert.AreEqual(jsonExpected, jsonResponse);
         }
 
+        #endregion
+
+        #region UpdateBoardMessage
+
+        [TestMethod]
+        [ExpectedException(typeof(HttpResponseException))]
+        public void UpdateBoardMessageWithInvalidIdThrowsHttpResponseException()
+        {
+            boardMessageService.UpdateBoardMessage(new BoardMessage()
+            {
+                Id = -42,
+                Message = "some message.",
+                ClientId = MockData.ClientMocks.ExistingValidClient.Id
+            });
+            Assert.Fail();
+        }
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void SetBoardMessageWithInvalidClientIdThrowsArgumentException()
+        public void UpdateBoardMessageWithInvalidClientIdThrowsArgumentException()
         {
-            boardMessageService.SetBoardMessage(MockData.BoardMessageMocks.BoardMessageWitInvalidClientId);
+            boardMessageService.UpdateBoardMessage(MockData.BoardMessageMocks.BoardMessageWitInvalidClientId);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(HttpResponseException))]
+        public void UpdateBoardMessagetWithEmptyMessageThrowsHttpResponseException()
+        {
+            boardMessageService.UpdateBoardMessage(MockData.BoardMessageMocks.BoardMessageWithEmptyMessage);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(HttpResponseException))]
+        public void UpdateBoardMessageWithoutMessageThrowsHttpResponseException()
+        {
+            boardMessageService.UpdateBoardMessage(MockData.BoardMessageMocks.BoardMessageWithoutMessage);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(HttpResponseException))]
+        public void UpdateBoardMessageWithWhiteSpaceMessageThrowsHttpResponseException()
+        {
+            boardMessageService.UpdateBoardMessage(MockData.BoardMessageMocks.BoardMessageWithWhiteSpaceMessage);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(HttpResponseException))]
+        public void UpdateBoardMessageWithOtherClientsIdThrowsHttpResponseException()
+        {
+            var existingBoardMessageWithOtherClientId = new BoardMessage()
+            {
+                Id = MockData.BoardMessageMocks.ExistingValidBoardMessage.Id,
+                ClientId = MockData.BoardMessageMocks.ExistingValidBoardMessage.ClientId + 1,
+                Created = MockData.BoardMessageMocks.ExistingValidBoardMessage.Created,
+                Message = MockData.BoardMessageMocks.ExistingValidBoardMessage.Message
+            };
+
+            boardMessageService.UpdateBoardMessage(existingBoardMessageWithOtherClientId);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void UpdateNullBoardMessageThrowsArgumentNullException()
+        {
+            boardMessageService.UpdateBoardMessage(null);
             Assert.Fail();
         }
 
         [TestMethod]
         public void UpdateValidBoardMessageReturnsValidBoardMessageResponse()
         {
-            var existingMessage = MockData.BoardMessageMocks.ExistingValidBoardMessage;
-            existingMessage.Message = "This message is modified and should be updated.";
+            var existingBoardMessageWithUpdatedMessage = new BoardMessage()
+            {
+                Id = MockData.BoardMessageMocks.ExistingValidBoardMessage.Id,
+                Message = "This message is modified and should be updated.",
+                ClientId = MockData.BoardMessageMocks.ExistingValidBoardMessage.ClientId,
+                Created = MockData.BoardMessageMocks.ExistingValidBoardMessage.Created
+            };
             var expected = new BoardMessageResponse()
             {
-                BoardMessage = existingMessage,
+                BoardMessage = existingBoardMessageWithUpdatedMessage,
                 OperationSuccess = true,
                 StorageOperation = new Entities.StorageOperation()
                 {
@@ -128,7 +205,7 @@ namespace MessageBoard.API.Tests.Tests
                     Name = Constants.Constants.StorageOperations.Update
                 }
             };
-            var response = boardMessageService.UpdateBoardMessage(existingMessage);
+            var response = boardMessageService.UpdateBoardMessage(existingBoardMessageWithUpdatedMessage);
 
             // setting not tested properties
             expected.Status = response.Status;
@@ -139,5 +216,7 @@ namespace MessageBoard.API.Tests.Tests
             var jsonResponse = JsonConvert.SerializeObject(response);
             Assert.AreEqual(jsonExpected, jsonResponse);
         }
+
+        #endregion
     }
 }

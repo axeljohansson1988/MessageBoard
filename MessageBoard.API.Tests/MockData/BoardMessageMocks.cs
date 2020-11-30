@@ -39,15 +39,24 @@ namespace MessageBoard.API.Tests.MockData
         {
             new BoardMessage()
             {
-                Id = 1
+                Id = 1,
+                Message = "This message has id 1.",
+                ClientId = ClientMocks.ExistingValidClient.Id,
+                Created = new DateTime(2020, 11, 27)
             },
             new BoardMessage ()
             {
-                Id = 2
+                Id = 2,
+                Message = "This message is has id 2.",
+            ClientId = ClientMocks.ExistingValidClient.Id,
+            Created = new DateTime(2020, 11, 27)
             },
             new BoardMessage ()
             {
-                Id = 3
+                Id = 3,
+                Message = "This message has id 3.",
+            ClientId = ClientMocks.ExistingValidClient.Id,
+            Created = new DateTime(2020, 11, 27)
             }
         };
         public static readonly List<BoardMessage> AllBoardMessagesList = ThreeFirstBoardMessagesList
@@ -56,15 +65,24 @@ namespace MessageBoard.API.Tests.MockData
         {
             new BoardMessage ()
             {
-                Id = 5
+                Id = 5,
+                Message = "This message has id 5.",
+            ClientId = ClientMocks.ExistingValidClient.Id,
+            Created = new DateTime(2020, 11, 27)
             },
             new BoardMessage ()
             {
-                Id = 6
+                Id = 6,
+                Message = "This message has id 6.",
+            ClientId = ClientMocks.ExistingValidClient.Id,
+            Created = new DateTime(2020, 11, 27)
             },
             new BoardMessage ()
             {
-                Id = 7
+                Id = 7,
+                Message = "This message has id 7.",
+            ClientId = ClientMocks.ExistingValidClient.Id,
+            Created = new DateTime(2020, 11, 27)
             }
         }).ToList();
     }

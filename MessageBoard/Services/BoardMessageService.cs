@@ -151,6 +151,12 @@ namespace MessageBoard.API.Services
                 throw new HttpResponseException(response);
             }
 
+            if (!boardMessage.Id.IsValidId())
+            {
+                response.BoardMessage = boardMessage;
+                throw new HttpResponseException(response, $"{boardMessage.Id} is not a valid {nameof(boardMessage.Id)}");
+            }
+
             var messageList = this.GetBoardMessages();
             var messageToUpdate = messageList.FirstOrDefault(message => message.Id == boardMessage.Id);
             if (messageToUpdate == null)
