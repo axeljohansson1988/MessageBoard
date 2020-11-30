@@ -21,5 +21,12 @@ namespace MessageBoard.API.Controllers
             var response = this.clientService.SetClient(client);
             return this.Ok(response);
         }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var response = this.clientService.GetClients();
+            return this.Ok(response);
+        }
     }
 }
