@@ -148,19 +148,19 @@ namespace MessageBoard.API.Services
             if (!response.OperationSuccess)
             {
                 response.BoardMessage = boardMessage;
-                throw new HttpResponseException(boardMessage);
+                throw new HttpResponseException(response);
             }
 
             var messageList = this.GetBoardMessages();
             var messageToUpdate = messageList.FirstOrDefault(message => message.Id == boardMessage.Id);
             if (messageToUpdate == null)
             {
-                throw new Exception($"Cannot update board message with id: {boardMessage.Id} => message does not exist.");
+                throw new HttpResponseException(response, $"Cannot update board message with id: {boardMessage.Id} => message does not exist.");
             }
 
             if (messageToUpdate.ClientId != boardMessage.ClientId)
             {
-                throw new Exception($"Cannot update board message with id: {messageToUpdate.Id} => message is not created by client with id: {boardMessage.ClientId}.");
+                throw new HttpResponseException(response, $"Cannot update board message with id: {messageToUpdate.Id} => message is not created by client with id: {boardMessage.ClientId}.");
             }
 
             messageList = messageList.Where(message => message.Id != messageToUpdate.Id).ToList();
