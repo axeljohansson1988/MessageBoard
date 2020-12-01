@@ -20,7 +20,7 @@ interface IBoardState {
     displaysNewClientInput: boolean;
     showMessageInput: boolean;
 }
-export default class Board extends React.Component<IBoardProps, IBoardState> {
+class Board extends React.Component<IBoardProps, IBoardState> {
     constructor(props: IBoardProps) {
         super(props);
         this.state = {
@@ -48,7 +48,7 @@ export default class Board extends React.Component<IBoardProps, IBoardState> {
         if (!currentClient) {
             return;
         }
-        getBoardMessages(currentClient.id, latestMessageOnTop).then((response) => {
+        getBoardMessages(latestMessageOnTop, currentClient.id).then((response) => {
             this.setState({ boardMessages: response.data, showMessageInput: true });
         }).catch((error) => {
             console.error(error);
@@ -339,3 +339,5 @@ export default class Board extends React.Component<IBoardProps, IBoardState> {
         );
     }
 }
+
+export default Board;

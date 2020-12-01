@@ -1,3 +1,4 @@
+import { IClient } from "../models/apiModels";
 import { makeGetRequest, makePostequest } from "./apiService";
 
 export const getClients = () => {
@@ -5,7 +6,7 @@ export const getClients = () => {
     return makeGetRequest(relativeUrl);
 };
 
-export const addClient = (client) => {
+export const addClient = (client: IClient) => {
     var relativeUrl = `Client`;
     return makePostequest(relativeUrl, client);
 };
