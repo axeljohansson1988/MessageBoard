@@ -70,9 +70,8 @@ export default class Board extends React.Component<IBoardProps, IBoardState> {
         }
         let newClient: IClient = { name: newClientName };
         addClient(newClient).then((response) => {
-            this.setState({ currentClient: response.data.client, boardMessages: [], displaysNewClientInput: false }, () => this.getBoardMessages());
+            this.setState({ currentClient: response.data.client, boardMessages: [], displaysNewClientInput: false, newClientName: undefined }, () => this.getBoardMessages());
             this.getClients();
-
         }).catch((error) => {
             console.error(error);
         });
