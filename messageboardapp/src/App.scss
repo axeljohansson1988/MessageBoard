@@ -1,1 +1,10 @@
+
+$primary: #FF5C28;
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+.client-name{
+  &:hover{
+    cursor:pointer;
+    color: $primary;
+    }
+}

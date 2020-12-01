@@ -12,7 +12,7 @@ interface IBaseResponse {
 export interface IBoardMessage extends IBaseModel {
     message: string;
     clientId?: number;
-    isMine: boolean;
+    isMine?: boolean;
 };
 
 export interface IClient extends IBaseModel {
