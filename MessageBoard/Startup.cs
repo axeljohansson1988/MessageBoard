@@ -30,11 +30,8 @@ namespace MessageBoard.API
             services.AddControllers(options =>
                 options.Filters.Add(new HttpResponseExceptionFilter())
             );
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MessageBoard.API", Version = "v1" });
-            });
-
+            
+            this.AddSwagger(services);
             this.AddServices(services);
         }
 
@@ -55,6 +52,23 @@ namespace MessageBoard.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+        } 
+
+        private void AddSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Message Board API",
+                    Description = "An API for adding, editing and deleting messages on a message board. Supports multiple clients.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Axel Johansson",
+                    }
+                });
             });
         }
 
