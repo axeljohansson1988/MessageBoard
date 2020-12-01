@@ -24,12 +24,12 @@ namespace MessageBoard.API.Tests.MockData
             new Client()
             {
                 Id = 1,
-                Name = "Björn Borg"
+                Name = "Astrid Lindgren"
             },
             new Client ()
             {
                 Id = 2,
-                Name = "Håkan Juholt"
+                Name = "Dan Brown"
             },
             new Client ()
             {
@@ -44,7 +44,7 @@ namespace MessageBoard.API.Tests.MockData
             new Client ()
             {
                 Id = 5,
-                Name = "Lady Gaga"
+                Name = "Ernest Hemingway"
             },
             new Client ()
             {
